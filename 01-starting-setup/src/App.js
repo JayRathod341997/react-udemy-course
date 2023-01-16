@@ -1,5 +1,5 @@
-import Expensive from "./components/ExpenseItem";
 import ExpenseItemProp from "./components/ExpenseItemProp";
+import Card from "./components/Card";
 function App() {
   const expenses = [
     {
@@ -26,7 +26,6 @@ function App() {
   return (
     <div>
       <h2>Let's get started!</h2>
-      <Expensive></Expensive>
       <ExpenseItemProp
         title={expenses[0].title}
         amount={expenses[0].amount}
