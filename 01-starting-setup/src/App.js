@@ -1,5 +1,4 @@
 import ExpenseItemProp from "./components/ExpenseItemProp";
-import Card from "./components/Card";
 function App() {
   const expenses = [
     {
