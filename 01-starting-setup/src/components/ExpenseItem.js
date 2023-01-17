@@ -1,5 +1,4 @@
 import "./ExpenseItem.css";
-
 function ExpenseItem() {
   const date = new Date("2022-03-25");
 
