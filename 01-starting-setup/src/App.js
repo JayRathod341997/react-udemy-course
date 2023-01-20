@@ -1,4 +1,4 @@
-import Expense from "./components/Expenses";
+import Expense from "./components/Expense";
 function App() {
   const expenses = [
     {

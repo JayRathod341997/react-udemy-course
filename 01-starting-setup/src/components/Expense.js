@@ -1,33 +1,31 @@
-import ExpenseItem from "./ExpenseItem";
-import Card from "./Card";
-import "./Expenses.css";
-function Expenses(props) {
+import ExpenseItemProp from "./ExpenseItemProp";
+function Expense(props) {
   let expenses = props.expenses;
 
   return (
-    <Card className="expenses">
-      <ExpenseItem
+    <div>
+      <ExpenseItemProp
         title={expenses[0].title}
         amount={expenses[0].amount}
         date={expenses[0].date}
-      ></ExpenseItem>
-      <ExpenseItem
+      ></ExpenseItemProp>
+      <ExpenseItemProp
         title={expenses[1].title}
         amount={expenses[1].amount}
         date={expenses[1].date}
-      ></ExpenseItem>
-      <ExpenseItem
+      ></ExpenseItemProp>
+      <ExpenseItemProp
         title={expenses[2].title}
         amount={expenses[2].amount}
         date={expenses[2].date}
-      ></ExpenseItem>
-      <ExpenseItem
+      ></ExpenseItemProp>
+      <ExpenseItemProp
         title={expenses[3].title}
         amount={expenses[3].amount}
         date={expenses[3].date}
-      ></ExpenseItem>
-    </Card>
+      ></ExpenseItemProp>
+    </div>
   );
 }
 
-export default Expenses;
+export default Expense;
