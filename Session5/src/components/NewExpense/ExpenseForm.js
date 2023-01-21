@@ -43,7 +43,7 @@ const ExpenseForm = (props) => {
     event.preventDefault(); // form submit will not reload the form
     const expenseData = {
       title: enteredTitle,
-      amount: enteredAmount,
+      amount: +enteredAmount,
       date: new Date(enteredDate),
     };
 
