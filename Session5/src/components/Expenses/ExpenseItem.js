@@ -8,13 +8,15 @@ function ExpenseItem(prop) {
   const date = prop.date;
 
   return (
-    <Card className="expense-item">
-      <ExpenseDate date={date}></ExpenseDate>
-      <div className="expense-item__description">
-        <h2>{prop.title}</h2>
-        <div className="expense-item__price">{amount}</div>
-      </div>
-    </Card>
+    <li>
+      <Card className="expense-item">
+        <ExpenseDate date={date}></ExpenseDate>
+        <div className="expense-item__description">
+          <h2>{prop.title}</h2>
+          <div className="expense-item__price">{amount}</div>
+        </div>
+      </Card>
+    </li>
   );
 }
 
