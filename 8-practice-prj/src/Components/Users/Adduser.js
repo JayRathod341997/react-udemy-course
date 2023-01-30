@@ -6,10 +6,6 @@ import classes from "./Adduser.module.css";
 const Adduser = (props) => {
   const [enteredUsername, setEnteredUsername] = useState("");
   const [enteredAge, setEnteredAge] = useState("");
-  const addUserHandler = (event) => {
-    event.preventDefault();
-    console.log(enteredUsername, enteredAge);
-  };
 
   const usernameChangeHandler = (event) => {
     setEnteredUsername(event.target.value);
@@ -19,6 +15,13 @@ const Adduser = (props) => {
     setEnteredAge(event.target.value);
   };
 
+  const addUserHandler = (event) => {
+    event.preventDefault();
+    console.log(enteredUsername, enteredAge);
+    setEnteredUsername("");
+    setEnteredAge("");
+  };
+
   return (
     <Card className={classes.input}>
       <form onSubmit={addUserHandler}>
@@ -26,10 +29,17 @@ const Adduser = (props) => {
         <input
           type="text"
           id="username"
+          value={enteredUsername}
           onChange={usernameChangeHandler}
         ></input>
         <label>Age (Years) </label>
-        <input type="number" id="age" onChange={ageChangeHandler}></input>
+
+        <input
+          type="number"
+          id="age"
+          value={enteredAge}
+          onChange={ageChangeHandler}
+        ></input>
         <Button type="submit">Add User</Button>
       </form>
     </Card>
