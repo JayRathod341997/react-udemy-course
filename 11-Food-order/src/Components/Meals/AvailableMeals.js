@@ -4,6 +4,18 @@ import MealItem from "../MealItem/MealItem";
 
 const DUMMY_MEALS = [
   {
+    id: "m5",
+    name: "Puff",
+    description: "Healthy...and green...",
+    price: 5,
+  },
+  {
+    id: "m6",
+    name: "Dabeli",
+    description: "Healthy...and green...",
+    price: 10,
+  },
+  {
     id: "m1",
     name: "Sushi",
     description: "Finest fish and veggies",
