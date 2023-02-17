@@ -21,16 +21,18 @@ function App() {
       }
 
       const data = await response.json();
-      console.log(data);
-      const transformedMovies = data.results.map((movieData) => {
-        return {
-          id: movieData.episode_id,
-          title: movieData.title,
-          openingText: movieData.opening_crawl,
-          releaseDate: movieData.release_date,
-        };
-      });
-      setMovies(transformedMovies);
+
+      const loadedMovies = [];
+      for (const key in data) {
+        loadedMovies.push({
+          id: key,
+          title: data[key].title,
+          releaseDate: data[key].releaseDate,
+          openingText: data[key].openingText,
+        });
+      }
+
+      setMovies(loadedMovies);
     } catch (error) {
       setError(error.message);
     }
@@ -53,6 +55,7 @@ function App() {
     );
     const data = await response.json();
     console.log(data);
+    fetchMoviesHandler();
   }
 
   let content = <p>Found no movies.</p>;
