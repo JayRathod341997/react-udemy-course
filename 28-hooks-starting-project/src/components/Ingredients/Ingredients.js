@@ -13,27 +13,6 @@ function Ingredients() {
   }, []);
 
   useEffect(() => {
-    fetch(
-      "https://react-hooks-update-8e04b-default-rtdb.firebaseio.com/ingredients.json"
-    )
-      .then((response) => {
-        return response.json();
-      })
-      .then((responseData) => {
-        const loadedIngredientData = [];
-        for (const key in responseData) {
-          loadedIngredientData.push({
-            id: key,
-            title: responseData[key].title,
-            amount: responseData[key].amount,
-          });
-        }
-        console.log(loadedIngredientData);
-        setUserIngredients(loadedIngredientData);
-      });
-  }, []);
-
-  useEffect(() => {
     console.log("USER EFFECTED");
   });
 
