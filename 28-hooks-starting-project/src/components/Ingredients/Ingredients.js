@@ -7,7 +7,7 @@ import Search from "./Search";
 
 function Ingredients() {
   const [userIngredients, setUserIngredients] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(false);
   const filteredIngredientHandler = useCallback((filteredIngredient) => {
     setUserIngredients(filteredIngredient);
   }, []);
@@ -17,6 +17,7 @@ function Ingredients() {
   });
 
   const addingIngredientHandler = (ingredient) => {
+    setIsLoading(true);
     fetch(
       "https://react-hooks-update-8e04b-default-rtdb.firebaseio.com/ingredients.json",
       {
@@ -26,6 +27,7 @@ function Ingredients() {
       }
     )
       .then((response) => {
+        setIsLoading(false);
         return response.json();
       })
       .then((responseData) => {
@@ -37,12 +39,14 @@ function Ingredients() {
   };
 
   const removeIngredientHandler = (ingredientId) => {
+    setIsLoading(true);
     fetch(
       `https://react-hooks-update-8e04b-default-rtdb.firebaseio.com/ingredients/${ingredientId}.json`,
       {
         method: "DELETE",
       }
     ).then((response) => {
+      setIsLoading(false);
       setUserIngredients((prevIngredient) =>
         prevIngredient.filter((ingredient) => ingredient.id !== ingredientId)
       );
@@ -51,7 +55,10 @@ function Ingredients() {
 
   return (
     <div className="App">
-      <IngredientForm onAddIngredient={addingIngredientHandler} />
+      <IngredientForm
+        onAddIngredient={addingIngredientHandler}
+        onLoading={isLoading}
+      />
 
       <section>
         <Search onLoadIngredient={filteredIngredientHandler} />
