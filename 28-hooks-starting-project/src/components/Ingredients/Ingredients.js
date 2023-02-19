@@ -1,12 +1,16 @@
 import React from "react";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import IngredientForm from "./IngredientForm";
 import IngredientList from "./IngredientList";
 import Search from "./Search";
 
 function Ingredients() {
   const [userIngredients, setUserIngredients] = useState([]);
+
+  const filteredIngredientHandler = useCallback((filteredIngredient) => {
+    setUserIngredients(filteredIngredient);
+  }, []);
 
   useEffect(() => {
     fetch(
@@ -28,6 +32,10 @@ function Ingredients() {
         setUserIngredients(loadedIngredientData);
       });
   }, []);
+
+  useEffect(() => {
+    console.log("USER EFFECTED");
+  });
 
   const addingIngredientHandler = (ingredient) => {
     fetch(
@@ -60,7 +68,7 @@ function Ingredients() {
       <IngredientForm onAddIngredient={addingIngredientHandler} />
 
       <section>
-        <Search />
+        <Search onLoadIngredient={filteredIngredientHandler} />
         {/* Need to add list here! */}
         <IngredientList
           ingredients={userIngredients}
