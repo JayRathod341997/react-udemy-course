@@ -3,11 +3,13 @@ import React from "react";
 import { useState, useEffect, useCallback } from "react";
 import IngredientForm from "./IngredientForm";
 import IngredientList from "./IngredientList";
+import ErrorModel from "../UI/ErrorModal";
 import Search from "./Search";
 
 function Ingredients() {
   const [userIngredients, setUserIngredients] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
   const filteredIngredientHandler = useCallback((filteredIngredient) => {
     setUserIngredients(filteredIngredient);
   }, []);
@@ -45,16 +47,27 @@ function Ingredients() {
       {
         method: "DELETE",
       }
-    ).then((response) => {
-      setIsLoading(false);
-      setUserIngredients((prevIngredient) =>
-        prevIngredient.filter((ingredient) => ingredient.id !== ingredientId)
-      );
-    });
+    )
+      .then((response) => {
+        setIsLoading(false);
+        setUserIngredients((prevIngredient) =>
+          prevIngredient.filter((ingredient) => ingredient.id !== ingredientId)
+        );
+      })
+      .catch((err) => {
+        setError("Something went wrong");
+      });
+  };
+
+  const clearError = () => {
+    setError(null);
+    setIsLoading(false);
   };
 
   return (
     <div className="App">
+      {error && <ErrorModel onClose={clearError}> {error}</ErrorModel>}
+
       <IngredientForm
         onAddIngredient={addingIngredientHandler}
         onLoading={isLoading}
