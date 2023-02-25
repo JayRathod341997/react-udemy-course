@@ -1,17 +1,52 @@
 import React from "react";
 
-import { useState, useEffect, useCallback } from "react";
+import { useReducer, useEffect, useCallback } from "react";
 import IngredientForm from "./IngredientForm";
 import IngredientList from "./IngredientList";
 import ErrorModel from "../UI/ErrorModal";
 import Search from "./Search";
 
+const ingredientReducer = (currentIngredients, action) => {
+  switch (action.type) {
+    case "SET":
+      return action.ingredients;
+    case "ADD":
+      return [...currentIngredients, action.ingredient];
+    case "DELETE":
+      return currentIngredients.filter((item) => item.id !== action.id);
+    default:
+      throw new Error("Not implemented");
+  }
+};
+
+const httpsReducer = (currHttpState, action) => {
+  switch (action.type) {
+    case "SEND":
+      return { loading: true, error: false };
+    case "RESPONSE":
+      return { ...currHttpState, loading: false };
+    case "ERROR":
+      return { loading: false, error: action.errorMessage };
+    case "CLEAR":
+      return { ...currHttpState, error: null };
+    default:
+      throw new Error("Not implemented");
+  }
+};
+
 function Ingredients() {
-  const [userIngredients, setUserIngredients] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [userIngredients, dispatch] = useReducer(ingredientReducer, []);
+  // const [userIngredients, setUserIngredients] = useState([]);
+
+  const [httpState, dispatchHttp] = useReducer(httpsReducer, {
+    loading: false,
+    error: null,
+  });
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [error, setError] = useState(null);
   const filteredIngredientHandler = useCallback((filteredIngredient) => {
-    setUserIngredients(filteredIngredient);
+    // setUserIngredients(filteredIngredient);
+    dispatch({ type: "SET", ingredients: filteredIngredient });
   }, []);
 
   useEffect(() => {
@@ -19,7 +54,8 @@ function Ingredients() {
   });
 
   const addingIngredientHandler = (ingredient) => {
-    setIsLoading(true);
+    // setIsLoading(true);
+
     fetch(
       "https://react-hooks-update-8e04b-default-rtdb.firebaseio.com/ingredients.json",
       {
@@ -29,19 +65,25 @@ function Ingredients() {
       }
     )
       .then((response) => {
-        setIsLoading(false);
+        dispatchHttp({ type: "RESPONSE" });
+        // setIsLoading(false);
         return response.json();
       })
       .then((responseData) => {
-        setUserIngredients((prevIngredient) => [
-          ...prevIngredient,
-          { id: responseData.name, ...ingredient },
-        ]);
+        // setUserIngredients((prevIngredient) => [
+        //   ...prevIngredient,
+        //   { id: responseData.name, ...ingredient },
+        // ]);,
+        dispatch({
+          type: "ADD",
+          ingredient: { id: responseData.name, ...ingredient },
+        });
       });
   };
 
   const removeIngredientHandler = (ingredientId) => {
-    setIsLoading(true);
+    // setIsLoading(true);
+    dispatchHttp({ type: "SEND" });
     fetch(
       `https://react-hooks-update-8e04b-default-rtdb.firebaseio.com/ingredients/${ingredientId}.json`,
       {
@@ -49,28 +91,34 @@ function Ingredients() {
       }
     )
       .then((response) => {
-        setIsLoading(false);
-        setUserIngredients((prevIngredient) =>
-          prevIngredient.filter((ingredient) => ingredient.id !== ingredientId)
-        );
+        dispatchHttp({ type: "RESPONSE" });
+        // setIsLoading(false);
+        // setUserIngredients((prevIngredient) =>
+        //   prevIngredient.filter((ingredient) => ingredient.id !== ingredientId)
+        // );
+        dispatch({ type: "DELETE", id: ingredientId });
       })
       .catch((err) => {
-        setError("Something went wrong");
+        dispatchHttp({ type: "ERROR", errorMessage: "Something went wrong" });
+        // setError("Something went wrong");
       });
   };
 
   const clearError = () => {
-    setError(null);
-    setIsLoading(false);
+    dispatchHttp({ type: "CLEAR" });
+    // setError(null);
+    // setIsLoading(false);
   };
 
   return (
     <div className="App">
-      {error && <ErrorModel onClose={clearError}> {error}</ErrorModel>}
+      {httpState.error && (
+        <ErrorModel onClose={clearError}> {httpState.error}</ErrorModel>
+      )}
 
       <IngredientForm
         onAddIngredient={addingIngredientHandler}
-        onLoading={isLoading}
+        onLoading={httpState.loading}
       />
 
       <section>
