@@ -9,7 +9,7 @@ const SimpleInput = (props) => {
     isValid: enteredNameIsValid,
     valueInputHandler: nameInputHandler,
     valueInputBlurHandler: nameInputBlurHandler,
-    reset,
+    reset: nameReset,
   } = useInput((value) => value.trim() !== "");
 
   const [enteredEmail, setEnteredEmail] = useState("");
@@ -35,7 +35,7 @@ const SimpleInput = (props) => {
   const formSubmitHandler = (event) => {
     event.preventDefault();
 
-    reset();
+    nameReset();
 
     setEnteredEmailIsTouch(true);
     setEnteredEmail("");
