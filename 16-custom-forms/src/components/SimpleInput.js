@@ -1,4 +1,3 @@
-
 import useInput from "../hooks/use-input";
 
 const SimpleInput = (props) => {
@@ -21,7 +20,7 @@ const SimpleInput = (props) => {
   } = useInput((value) => value.includes("@"));
 
   let isFormValid = false;
-  if (nameInputHasError && enteredEmailIsValid) {
+  if (enteredNameIsValid && enteredEmailIsValid) {
     isFormValid = true;
   }
 
@@ -30,7 +29,6 @@ const SimpleInput = (props) => {
 
     nameReset();
     emailReset();
-
   };
 
   const nameInputClasses = nameInputHasError
