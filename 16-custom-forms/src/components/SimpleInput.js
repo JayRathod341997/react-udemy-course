@@ -6,6 +6,7 @@ const SimpleInput = (props) => {
   const {
     value: enteredName,
     hasError: nameInputIsInvalid,
+    isValid: enteredNameIsValid,
     valueInputHandler: nameInputHandler,
     valueInputBlurHandler: nameInputBlurHandler,
     reset,
@@ -17,7 +18,7 @@ const SimpleInput = (props) => {
   // const [enteredNameIsTouch, setEnteredNameIsTouch] = useState(false);
   const [enteredEmailIsTouch, setEnteredEmailIsTouch] = useState(false);
 
-  const enteredNameIsValid = enteredName.trim() !== "";
+  // const enteredNameIsValid = enteredName.trim() !== "";
   const enteredEmailIsValid = enteredEmail.includes("@");
   // const nameInputIsInvalid = !enteredNameIsValid && enteredNameIsTouch;
   const nameEmailIsInvalid = !enteredEmailIsValid && enteredEmailIsTouch;
