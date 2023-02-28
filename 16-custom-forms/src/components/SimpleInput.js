@@ -12,13 +12,10 @@ const SimpleInput = (props) => {
     reset,
   } = useInput((value) => value.trim() !== "");
 
-  // const [enteredName, setEnteredName] = useState("");
   const [enteredEmail, setEnteredEmail] = useState("");
-  // const [enteredNameIsValid, setEnteredNameIsValid] = useState(false);
-  // const [enteredNameIsTouch, setEnteredNameIsTouch] = useState(false);
+
   const [enteredEmailIsTouch, setEnteredEmailIsTouch] = useState(false);
 
-  // const enteredNameIsValid = enteredName.trim() !== "";
   const enteredEmailIsValid = enteredEmail.includes("@");
   // const nameInputIsInvalid = !enteredNameIsValid && enteredNameIsTouch;
   const nameEmailIsInvalid = !enteredEmailIsValid && enteredEmailIsTouch;
@@ -27,16 +24,10 @@ const SimpleInput = (props) => {
     isFormValid = true;
   }
 
-  // const nameInputHandler = (event) => {
-  //   setEnteredName(event.target.value);
-  // };
   const emailInputHandler = (event) => {
     setEnteredEmail(event.target.value);
   };
 
-  // const nameInputBlurHandler = (event) => {
-  //   setEnteredNameIsTouch(true);
-  // };
   const emailInputBlurHandler = (event) => {
     setEnteredEmailIsTouch(true);
   };
@@ -45,12 +36,9 @@ const SimpleInput = (props) => {
     event.preventDefault();
 
     reset();
-    // setEnteredNameIsTouch(true);
-    setEnteredEmailIsTouch(true);
 
-    // setEnteredName("");
+    setEnteredEmailIsTouch(true);
     setEnteredEmail("");
-    // setEnteredNameIsTouch(false);
     setEnteredEmailIsTouch(false);
   };
 
