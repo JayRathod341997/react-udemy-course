@@ -9,9 +9,9 @@ const HomePage = () => {
     <>
       <h1>HomePage</h1>
       <Link to="/product">Go to Product</Link>
-      <div>
+      <p>
         <button onClick={navigateHandler}> Product</button>
-      </div>
+      </p>
     </>
   );
 };
