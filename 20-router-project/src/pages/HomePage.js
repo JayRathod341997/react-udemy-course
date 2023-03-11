@@ -8,7 +8,7 @@ const HomePage = () => {
   return (
     <>
       <h1>HomePage</h1>
-      <Link to="/product">Go to Product</Link>
+      <Link to="product">Go to Product</Link>
       <p>
         <button onClick={navigateHandler}> Product</button>
       </p>
