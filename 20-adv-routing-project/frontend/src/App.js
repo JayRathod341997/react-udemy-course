@@ -23,34 +23,30 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import EventDetailPage from "./pages/EventDetailPage";
-import EventsPage from "./pages/EventsPage";
+import Events, { loader as loadData } from "./pages/Events";
 import NewEventPage from "./pages/NewEventPage";
 import EditEventPage from "./pages/EditEventPage";
 import RootLayout from "./pages/Root";
+import EventRoot from "./pages/EventRoot";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
     children: [
-      {
-        path: "",
-        element: <HomePage />,
-      },
+      { index: true, element: <HomePage /> },
       {
         path: "events",
-        element: <EventsPage />,
-      },
-      {
-        path: "events/:eventId",
-        element: <EventDetailPage />,
-      },
-      {
-        path: "events/new",
-        element: <NewEventPage />,
-      },
-      {
-        path: "events/:eventId/edit",
-        element: <EditEventPage />,
+        element: <EventRoot />,
+        children: [
+          {
+            index: true,
+            element: <Events />,
+            loader: loadData,
+          },
+          { path: ":eventId", element: <EventDetailPage /> },
+          { path: "new", element: <NewEventPage /> },
+          { path: ":eventId/edit", element: <EditEventPage /> },
+        ],
       },
     ],
   },
