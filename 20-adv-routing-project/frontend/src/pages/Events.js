@@ -2,9 +2,6 @@ import EventsList from "../components/EventsList";
 import { useLoaderData } from "react-router-dom";
 function EventsPage() {
   const loadData = useLoaderData();
-  if (loadData.isError) {
-    return <p>{loadData.message}</p>;
-  }
   const events = loadData.events;
   return (
     <>
@@ -16,10 +13,12 @@ function EventsPage() {
 export default EventsPage;
 
 export async function loader() {
-  const response = await fetch("http://localhost:8080/events/12");
+  const response = await fetch("http://localhost:8080/events12");
 
   if (!response.ok) {
-    return { isError: true, message: "An error occurred" };
+    throw new Response(JSON.stringify({ message: "API error" }), {
+      status: 500,
+    });
   } else {
     const resData = await response.json();
     return resData;
