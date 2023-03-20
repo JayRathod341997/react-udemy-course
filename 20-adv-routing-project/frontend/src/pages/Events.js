@@ -13,12 +13,15 @@ function EventsPage() {
 export default EventsPage;
 
 export async function loader() {
-  const response = await fetch("http://localhost:8080/events12");
+  const response = await fetch("http://localhost:8080/events");
 
   if (!response.ok) {
-    throw new Response(JSON.stringify({ message: "API error" }), {
-      status: 500,
-    });
+    throw new Response(
+      JSON.stringify({ message: "API error for gettong events" }),
+      {
+        status: 500,
+      }
+    );
   } else {
     const resData = await response.json();
     return resData;
