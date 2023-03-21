@@ -1,7 +1,8 @@
 import EventsList from "../components/EventsList";
 import { useLoaderData } from "react-router-dom";
 function EventsPage() {
-  const events = useLoaderData();
+  const loadData = useLoaderData();
+  const events = loadData.events;
   return (
     <>
       <EventsList events={events} />
@@ -15,10 +16,15 @@ export async function loader() {
   const response = await fetch("http://localhost:8080/events");
 
   if (!response.ok) {
-    // setError("Fetching events failed.");
+    throw new Response(
+      JSON.stringify({ message: "API error for gettong events" }),
+      {
+        status: 500,
+      }
+    );
   } else {
     const resData = await response.json();
-    return resData.events;
+    return resData;
     // setFetchedEvents(resData.events);
   }
 }
