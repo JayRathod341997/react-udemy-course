@@ -28,6 +28,10 @@ export async function action({ request, params }) {
     body: JSON.stringify(eventData),
   });
 
+  if (response.status === 422) {
+    // if required is removed from the client side form and form is submitted
+    return response;
+  }
   if (!response.ok) {
     json({ message: "Couldn't save event" }, { status: 500 });
   }

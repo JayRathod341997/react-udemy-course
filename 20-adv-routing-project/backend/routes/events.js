@@ -61,9 +61,7 @@ router.post("/", async (req, res, next) => {
 
   try {
     await add(data);
-    setTimeout(() => {
-      res.status(201).json({ message: "Event saved.", event: data });
-    }, 2000);
+    res.status(201).json({ message: "Event saved.", event: data });
   } catch (error) {
     next(error);
   }
@@ -90,7 +88,7 @@ router.patch("/:id", async (req, res, next) => {
     errors.image = "Invalid image.";
   }
 
-  if (Object.keys(errors).length > 0) {
+  if (Object.keys(errors).length > 0) { // if error object is empty or not
     return res.status(422).json({
       message: "Updating the event failed due to validation errors.",
       errors,

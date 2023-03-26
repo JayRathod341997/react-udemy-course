@@ -1,10 +1,16 @@
-import { Form, useNavigate, useNavigation } from "react-router-dom";
+import {
+  Form,
+  useNavigate,
+  useNavigation,
+  useActionData,
+} from "react-router-dom";
 
 import classes from "./EventForm.module.css";
 
 function EventForm({ method, event }) {
   const navigate = useNavigate();
   const navigation = useNavigation();
+  const data = useActionData(); // get data from closest page -> NewEventPage
   const isSubmitted = navigation.state === "submitting";
 
   function cancelHandler() {
@@ -13,6 +19,18 @@ function EventForm({ method, event }) {
 
   return (
     <Form method="post" className={classes.form}>
+      {/*  if data is submitted ,
+            && if data of error property is set  then  display error */}
+      {data && data.errors && (
+        <ul>
+          {Object.values(data.errors).map((err) => (
+            <li key={err}>{err}</li>
+          ))}
+        </ul>
+
+        // Object.values will give all the values available inside the data.error
+      )}
+
       <p>
         <label htmlFor="title">Title</label>
         <input
