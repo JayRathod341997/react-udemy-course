@@ -1,15 +1,36 @@
-import { useNavigate } from "react-router-dom";
+import {
+  Form,
+  useNavigate,
+  useNavigation,
+  useActionData,
+} from "react-router-dom";
 
 import classes from "./EventForm.module.css";
 
 function EventForm({ method, event }) {
   const navigate = useNavigate();
+  const navigation = useNavigation();
+  const data = useActionData(); // get data from closest page -> NewEventPage
+  const isSubmitted = navigation.state === "submitting";
+
   function cancelHandler() {
     navigate("..");
   }
 
   return (
-    <form className={classes.form}>
+    <Form method="post" className={classes.form}>
+      {/*  if data is submitted ,
+            && if data of error property is set  then  display error */}
+      {data && data.errors && (
+        <ul>
+          {Object.values(data.errors).map((err) => (
+            <li key={err}>{err}</li>
+          ))}
+        </ul>
+
+        // Object.values will give all the values available inside the data.error
+      )}
+
       <p>
         <label htmlFor="title">Title</label>
         <input
@@ -17,7 +38,7 @@ function EventForm({ method, event }) {
           type="text"
           name="title"
           required
-          defaultValue={event.title ? event.title : ""}
+          defaultValue={event ? event.title : "New Event title"}
         />
       </p>
       <p>
@@ -27,7 +48,11 @@ function EventForm({ method, event }) {
           type="url"
           name="image"
           required
-          defaultValue={event.image ? event.image : ""}
+          defaultValue={
+            event
+              ? event.image
+              : "https://blog.hubspot.de/hubfs/Germany/Blog_images/Optimize_Marketing%20Events%20DACH%202021.jpg"
+          }
         />
       </p>
       <p>
@@ -37,7 +62,7 @@ function EventForm({ method, event }) {
           type="date"
           name="date"
           required
-          defaultValue={event.date ? event.date : ""}
+          defaultValue={event ? event.date : ""}
         />
       </p>
       <p>
@@ -47,16 +72,18 @@ function EventForm({ method, event }) {
           name="description"
           rows="5"
           required
-          defaultValue={event.description ? event.description : ""}
+          defaultValue={event ? event.description : "New description"}
         />
       </p>
       <div className={classes.actions}>
-        <button type="button" onClick={cancelHandler}>
+        <button type="button" onClick={cancelHandler} disabled={isSubmitted}>
           Cancel
         </button>
-        <button>Save</button>
+        <button disabled={isSubmitted}>
+          {isSubmitted ? "Submitting" : "Save"}
+        </button>
       </div>
-    </form>
+    </Form>
   );
 }
 

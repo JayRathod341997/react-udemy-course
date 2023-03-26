@@ -12,7 +12,9 @@ const router = express.Router();
 router.get("/", async (req, res, next) => {
   try {
     const events = await getAll();
-    res.json({ events: events });
+    res.json({
+      events: events,
+    });
   } catch (error) {
     next(error);
   }
@@ -21,7 +23,9 @@ router.get("/", async (req, res, next) => {
 router.get("/:id", async (req, res, next) => {
   try {
     const event = await get(req.params.id);
-    res.json({ event: event });
+    res.json({
+      event: event,
+    });
   } catch (error) {
     next(error);
   }
@@ -84,7 +88,7 @@ router.patch("/:id", async (req, res, next) => {
     errors.image = "Invalid image.";
   }
 
-  if (Object.keys(errors).length > 0) {
+  if (Object.keys(errors).length > 0) { // if error object is empty or not
     return res.status(422).json({
       message: "Updating the event failed due to validation errors.",
       errors,
@@ -93,7 +97,10 @@ router.patch("/:id", async (req, res, next) => {
 
   try {
     await replace(req.params.id, data);
-    res.json({ message: "Event updated.", event: data });
+    res.json({
+      message: "Event updated.",
+      event: data,
+    });
   } catch (error) {
     next(error);
   }
@@ -102,7 +109,9 @@ router.patch("/:id", async (req, res, next) => {
 router.delete("/:id", async (req, res, next) => {
   try {
     await remove(req.params.id);
-    res.json({ message: "Event deleted." });
+    res.json({
+      message: "Event deleted.",
+    });
   } catch (error) {
     next(error);
   }
