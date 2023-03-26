@@ -12,7 +12,9 @@ const router = express.Router();
 router.get("/", async (req, res, next) => {
   try {
     const events = await getAll();
-    res.json({ events: events });
+    res.json({
+      events: events,
+    });
   } catch (error) {
     next(error);
   }
@@ -21,7 +23,9 @@ router.get("/", async (req, res, next) => {
 router.get("/:id", async (req, res, next) => {
   try {
     const event = await get(req.params.id);
-    res.json({ event: event });
+    res.json({
+      event: event,
+    });
   } catch (error) {
     next(error);
   }
@@ -57,7 +61,9 @@ router.post("/", async (req, res, next) => {
 
   try {
     await add(data);
-    res.status(201).json({ message: "Event saved.", event: data });
+    setTimeout(() => {
+      res.status(201).json({ message: "Event saved.", event: data });
+    }, 2000);
   } catch (error) {
     next(error);
   }
@@ -93,7 +99,10 @@ router.patch("/:id", async (req, res, next) => {
 
   try {
     await replace(req.params.id, data);
-    res.json({ message: "Event updated.", event: data });
+    res.json({
+      message: "Event updated.",
+      event: data,
+    });
   } catch (error) {
     next(error);
   }
@@ -102,7 +111,9 @@ router.patch("/:id", async (req, res, next) => {
 router.delete("/:id", async (req, res, next) => {
   try {
     await remove(req.params.id);
-    res.json({ message: "Event deleted." });
+    res.json({
+      message: "Event deleted.",
+    });
   } catch (error) {
     next(error);
   }

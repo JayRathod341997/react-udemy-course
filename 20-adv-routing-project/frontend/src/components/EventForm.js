@@ -1,9 +1,12 @@
-import { Form, useNavigate } from "react-router-dom";
+import { Form, useNavigate, useNavigation } from "react-router-dom";
 
 import classes from "./EventForm.module.css";
 
 function EventForm({ method, event }) {
   const navigate = useNavigate();
+  const navigation = useNavigation();
+  const isSubmitted = navigation.state === "submitting";
+
   function cancelHandler() {
     navigate("..");
   }
@@ -27,7 +30,11 @@ function EventForm({ method, event }) {
           type="url"
           name="image"
           required
-          defaultValue={event ? event.image : ""}
+          defaultValue={
+            event
+              ? event.image
+              : "https://blog.hubspot.de/hubfs/Germany/Blog_images/Optimize_Marketing%20Events%20DACH%202021.jpg"
+          }
         />
       </p>
       <p>
@@ -51,10 +58,12 @@ function EventForm({ method, event }) {
         />
       </p>
       <div className={classes.actions}>
-        <button type="button" onClick={cancelHandler}>
+        <button type="button" onClick={cancelHandler} disabled={isSubmitted}>
           Cancel
         </button>
-        <button>Save</button>
+        <button disabled={isSubmitted}>
+          {isSubmitted ? "Submitting" : "Save"}
+        </button>
       </div>
     </Form>
   );
