@@ -3,12 +3,17 @@ import {
   useNavigate,
   useNavigation,
   useActionData,
+  json,
+  redirect,
 } from "react-router-dom";
 
 import classes from "./EventForm.module.css";
 
 function EventForm({ method, event }) {
+  //method,event came from props value => post/patch
+
   const navigate = useNavigate();
+
   const navigation = useNavigation();
   const data = useActionData(); // get data from closest page -> NewEventPage
   const isSubmitted = navigation.state === "submitting";
@@ -18,7 +23,7 @@ function EventForm({ method, event }) {
   }
 
   return (
-    <Form method="post" className={classes.form}>
+    <Form method={method} className={classes.form}>
       {/*  if data is submitted ,
             && if data of error property is set  then  display error */}
       {data && data.errors && (
@@ -88,3 +93,41 @@ function EventForm({ method, event }) {
 }
 
 export default EventForm;
+
+export async function action({ request, params }) {
+  const data = await request.formData();
+  const method = request.method;
+
+  console.log(request);
+
+  const eventData = {
+    title: data.get("title"),
+    image: data.get("image"),
+    date: data.get("date"),
+    description: data.get("description"),
+  };
+
+  let url = "http://localhost:8080/events";
+  if (method === "PATCH") {
+    const eventId = params.eventId;
+    url = "http://localhost:8080/events/" + eventId;
+  }
+
+  const response = await fetch(url, {
+    method: method,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(eventData),
+  });
+
+  if (response.status === 422) {
+    // if required is removed from the client side form and form is submitted
+    return response;
+  }
+  if (!response.ok) {
+    json({ message: "Couldn't save event" }, { status: 500 });
+  }
+
+  return redirect("/events/");
+}
