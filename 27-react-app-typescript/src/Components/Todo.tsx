@@ -1,8 +1,13 @@
-const Todo =()=>{
-   return <ul>
-    <li>Frist tast</li>
-    <li>second tast</li>
-   </ul>
-}
+import React from "react";
+
+const Todo: React.FC<{ items: string[] }> = (props) => {
+  return (
+    <ul>
+      {props.items.map((item) => (
+        <li key={item}>{item}</li>
+      ))}
+    </ul>
+  );
+};
 
 export default Todo;
