@@ -1,9 +1,10 @@
-import Todo from "./Components/Todo";
-
+import Todos from "./Components/Todos";
+import Todo from "./models/Todo";
 function App() {
+  const todo = [new Todo("First Todo object"), new Todo("Second Todo object")];
   return (
     <div>
-      <Todo items={["first", "second item"]} />
+      <Todos items={todo} />
     </div>
   );
 }
