@@ -1,10 +1,21 @@
 import Todos from "./Components/Todos";
 import Todo from "./models/Todo";
+import NewTodo from "./Components/NewTodo";
+import { useState } from "react";
+
 function App() {
-  const todo = [new Todo("First Todo object"), new Todo("Second Todo object")];
+  const [todos, setTodos] = useState<Todo[]>([]);
+
+  const addTodoHandler = (todoText: string) => {
+    const newTodo = new Todo(todoText);
+    setTodos((prevTodo) => {
+      return prevTodo.concat(newTodo);
+    });
+  };
   return (
     <div>
-      <Todos items={todo} />
+      <NewTodo onAddTodo={addTodoHandler} />
+      <Todos items={todos} />
     </div>
   );
 }
