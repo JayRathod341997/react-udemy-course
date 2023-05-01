@@ -15,9 +15,8 @@ function App() {
 
   const removeTodoHandler = (id: string) => {
     setTodos((prevTodo) => {
-      return prevTodo.filter(e=>e.id !== id);
+      return prevTodo.filter((e) => e.id !== id);
     });
-    console.log("app removeTodoHandler", id);
   };
 
   return (
