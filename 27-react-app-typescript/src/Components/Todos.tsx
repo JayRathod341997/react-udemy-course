@@ -5,10 +5,6 @@ import classes from "./Todos.module.css";
 const Todos: React.FC<{ onRemoveTodo: (id: string) => void; items: Todo[] }> = (
   props
 ) => {
-  const removeItemHanlder = (id: string) => {
-    props.onRemoveTodo(id);
-  };
-
   return (
     <ul className={classes.todos}>
       {props.items.map((item) => (
@@ -16,7 +12,7 @@ const Todos: React.FC<{ onRemoveTodo: (id: string) => void; items: Todo[] }> = (
           key={item.id}
           itemKey={item.id}
           text={item.text}
-          removeTodoItem={removeItemHanlder}
+          onRemoveTodo={props.onRemoveTodo.bind(null, item.id)}
         />
       ))}
     </ul>
