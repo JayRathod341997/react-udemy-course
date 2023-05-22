@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import Post from "./Posts";
 import classes from "./PostList.module.css";
 import NewPost from "./NewPost";
-export default function PostList() {
+import Modal from "./Modal";
+export default function PostList({ visibleModal, hideModalHandler }) {
   const [enteredText, setEnteredText] = useState("");
   const bodyChangeHandler = (event) => {
     setEnteredText(event.target.value);
@@ -10,7 +11,12 @@ export default function PostList() {
 
   return (
     <>
-      <NewPost onAddPost={bodyChangeHandler} />
+      {visibleModal && (
+        <Modal onClose={hideModalHandler}>
+          <NewPost onAddPost={bodyChangeHandler} />
+        </Modal>
+      )}
+
       <ul className={classes.posts}>
         <Post author="a1" body={enteredText} />
         <Post author="a2" body="content2" />
