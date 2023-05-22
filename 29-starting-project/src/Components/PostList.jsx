@@ -3,15 +3,10 @@ import Post from "./Posts";
 import classes from "./PostList.module.css";
 import NewPost from "./NewPost";
 import Modal from "./Modal";
-export default function PostList() {
-  const [visibleModal, setVisibleModal] = useState(true);
+export default function PostList({ visibleModal, hideModalHandler }) {
   const [enteredText, setEnteredText] = useState("");
   const bodyChangeHandler = (event) => {
     setEnteredText(event.target.value);
-  };
-
-  const hideModalHandler = () => {
-    setVisibleModal(false);
   };
 
   return (
