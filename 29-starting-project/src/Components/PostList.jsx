@@ -13,7 +13,7 @@ export default function PostList({ visibleModal, hideModalHandler }) {
     <>
       {visibleModal && (
         <Modal onClose={hideModalHandler}>
-          <NewPost onAddPost={bodyChangeHandler} />
+          <NewPost onAddPost={bodyChangeHandler} onClose={hideModalHandler}/>
         </Modal>
       )}
 
