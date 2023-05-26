@@ -1,27 +1,26 @@
 import classes from "./NewPost.module.css";
 import { useState } from "react";
 function NewPost(props) {
-
-  const [enteredBody,setEnteredBody] = useState();
-  const [enteredAuthor,setEnteredAuthor] = useState();
-  const onBodychangeHandler=(event)=>{
+  const [enteredBody, setEnteredBody] = useState();
+  const [enteredAuthor, setEnteredAuthor] = useState();
+  const onBodychangeHandler = (event) => {
     setEnteredBody(event.target.value);
-  }
+  };
 
-  const onNameChangeHandler=(event)=>{
+  const onNameChangeHandler = (event) => {
     setEnteredAuthor(event.target.value);
-  }
+  };
 
-  const submitHandler = (event)=>{
+  const submitHandler = (event) => {
     event.preventDefault();
     const personData = {
-      body:enteredBody,
-      author:enteredAuthor
-    }
+      body: enteredBody,
+      author: enteredAuthor,
+    };
+    props.onAdd(personData);
     console.log(personData);
     props.onClose();
-
-  }
+  };
   return (
     <form className={classes.form} onSubmit={submitHandler}>
       <p>
@@ -30,10 +29,12 @@ function NewPost(props) {
       </p>
       <p>
         <label htmlFor="name">Your name</label>
-        <input type="text" id="name" required onChange={onNameChangeHandler}/>
+        <input type="text" id="name" required onChange={onNameChangeHandler} />
       </p>
       <p className={classes.actions}>
-        <button type="button" onClick={props.onClose}>Cancle</button>
+        <button type="button" onClick={props.onClose}>
+          Cancle
+        </button>
         <button>Submit</button>
       </p>
     </form>

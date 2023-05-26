@@ -4,18 +4,22 @@ import classes from "./PostList.module.css";
 import NewPost from "./NewPost";
 import Modal from "./Modal";
 export default function PostList({ visibleModal, hideModalHandler }) {
-  
+  const [postData, setPostData] = useState([]);
+  const addPostHandler = (personData) => {
+    setPostData((prevData) => [...prevData, personData]);
+  };
   return (
     <>
       {visibleModal && (
         <Modal onClose={hideModalHandler}>
-          <NewPost onClose={hideModalHandler}/>
+          <NewPost onClose={hideModalHandler} onAdd={addPostHandler} />
         </Modal>
       )}
 
       <ul className={classes.posts}>
-        <Post author="a2" body="content2" />
-        <Post author="a3" body="content3" />
+        {postData.map((post) => (
+          <Post key={post.body} author={post.author} body={post.body} />
+        ))}
       </ul>
     </>
   );
