@@ -5,8 +5,16 @@ import NewPost from "./NewPost";
 import Modal from "./Modal";
 export default function PostList({ visibleModal, hideModalHandler }) {
   const [postData, setPostData] = useState([]);
-  const addPostHandler = (personData) => {
-    setPostData((prevData) => [...prevData, personData]);
+
+  const addPostHandler = (postData) => {
+    fetch("http://localhost:8080/posts", {
+      method: "POST",
+      body: JSON.stringify(postData),
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+    setPostData((prevData) => [...prevData, postData]);
   };
   return (
     <>
