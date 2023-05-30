@@ -1,26 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Post from "./Post";
+import { useLoaderData } from "react-router-dom";
 import classes from "./PostList.module.css";
 export default function PostList({ visibleModal, hideModalHandler }) {
-  const [postData, setPostData] = useState([]);
-
-  const [isFetching, setIsFetching] = useState(false);
-
-  // fetch("http://localhost:8080/posts")
-  //   .then((response) => response.json())
-  //   .then((data) => setPostData(data.posts));
-  useEffect(() => {
-    async function fetchPost() {
-      setIsFetching(true);
-      const response = await fetch("http://localhost:8080/posts");
-      const resData = await response.json();
-      // console.log(resData);
-      setPostData(resData.posts);
-      setIsFetching(false);
-    }
-
-    fetchPost();
-  }, []);
+  const postData = useLoaderData();
 
   const addPostHandler = (postData) => {
     fetch("http://localhost:8080/posts", {
@@ -34,7 +17,7 @@ export default function PostList({ visibleModal, hideModalHandler }) {
   };
   return (
     <>
-      {!isFetching && postData.length > 0 && (
+      {postData.length > 0 && (
         <ul className={classes.posts}>
           {postData.map((post) => (
             <Post key={post.body} author={post.author} body={post.body} />
@@ -42,15 +25,9 @@ export default function PostList({ visibleModal, hideModalHandler }) {
         </ul>
       )}
 
-      {!isFetching && postData.length === 0 && (
+      {postData.length === 0 && (
         <div>
           <h1>No post available</h1>
-        </div>
-      )}
-
-      {isFetching && (
-        <div>
-          <p>Loading..</p>
         </div>
       )}
     </>
