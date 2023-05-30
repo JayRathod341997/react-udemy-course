@@ -2,7 +2,7 @@ import PostList from "./Components/PostList";
 import MainHeader from "./Components/MainHeader";
 import { useState } from "react";
 function App() {
-  const [visibleModal, setVisibleModal] = useState(true);
+  const [visibleModal, setVisibleModal] = useState(false);
 
   const createPosthandler = () => {
     setVisibleModal(true);
