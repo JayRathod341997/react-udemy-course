@@ -1,6 +1,6 @@
 import React from "react";
-import classes from "./Posts.module.css";
-export default function Posts(props) {
+import classes from "./Post.module.css";
+export default function Post(props) {
   return (
     <div className={classes.post}>
       <p className={classes.author}>{props.author}</p>
