@@ -1,10 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Post from "./Posts";
 import classes from "./PostList.module.css";
 import NewPost from "./NewPost";
 import Modal from "./Modal";
 export default function PostList({ visibleModal, hideModalHandler }) {
   const [postData, setPostData] = useState([]);
+  // fetch("http://localhost:8080/posts")
+  //   .then((response) => response.json())
+  //   .then((data) => setPostData(data.posts));
+  useEffect(() => {
+    async function fetchPost() {
+      const response = await fetch("http://localhost:8080/posts");
+      const resData = await response.json();
+      // console.log(resData);
+      setPostData(resData.posts);
+    }
+
+    fetchPost();
+  }, []);
 
   const addPostHandler = (postData) => {
     fetch("http://localhost:8080/posts", {
