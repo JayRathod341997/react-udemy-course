@@ -5,16 +5,6 @@ import classes from "./PostList.module.css";
 export default function PostList({ visibleModal, hideModalHandler }) {
   const postData = useLoaderData();
 
-  const addPostHandler = (postData) => {
-    fetch("http://localhost:8080/posts", {
-      method: "POST",
-      body: JSON.stringify(postData),
-      headers: {
-        "content-type": "application/json",
-      },
-    });
-    setPostData((prevData) => [...prevData, postData]);
-  };
   return (
     <>
       {postData.length > 0 && (
