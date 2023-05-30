@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Post from "./Post";
 import classes from "./PostList.module.css";
-import NewPost from "./NewPost";
-import Modal from "./Modal";
 export default function PostList({ visibleModal, hideModalHandler }) {
   const [postData, setPostData] = useState([]);
 
@@ -36,12 +34,6 @@ export default function PostList({ visibleModal, hideModalHandler }) {
   };
   return (
     <>
-      {visibleModal && (
-        <Modal onClose={hideModalHandler}>
-          <NewPost onClose={hideModalHandler} onAdd={addPostHandler} />
-        </Modal>
-      )}
-
       {!isFetching && postData.length > 0 && (
         <ul className={classes.posts}>
           {postData.map((post) => (
