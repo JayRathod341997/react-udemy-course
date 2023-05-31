@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Post from "./Post";
 import { useLoaderData } from "react-router-dom";
 import classes from "./PostList.module.css";
-export default function PostList({ visibleModal, hideModalHandler }) {
+export default function PostList() {
   const postData = useLoaderData();
 
   return (
@@ -10,7 +10,12 @@ export default function PostList({ visibleModal, hideModalHandler }) {
       {postData.length > 0 && (
         <ul className={classes.posts}>
           {postData.map((post) => (
-            <Post key={post.body} author={post.author} body={post.body} />
+            <Post
+              key={post.id}
+              id={post.id}
+              author={post.author}
+              body={post.body}
+            />
           ))}
         </ul>
       )}
